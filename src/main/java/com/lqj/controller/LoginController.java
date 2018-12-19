@@ -2,13 +2,14 @@ package com.lqj.controller;
 
 import com.lqj.DAO.UserDAO;
 import com.lqj.entity.User;
+import com.mysql.cj.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,6 @@ public class LoginController {
     }
 
     @RequestMapping("/hello.html")
-//    @RequestMapping("/")
     public String hello() {
         return "hello";
     }
@@ -60,16 +60,15 @@ public class LoginController {
         Map<String, Object> res = new HashMap<>();
         logged_user = userDAO.loginable(user);
         if (null != logged_user) {
-            System.out.println(0);
             res.put("loginable", "yes");
-            System.out.println(1);
 //        ModelAndView mav = new ModelAndView("hello");
 //            mav.addObject("user", logged_user);
 //            mav.addObject("user", "198804088733");
 //            System.out.println(2);
 //            mav.setViewName("hello");
 //            System.out.println(3);
-//            System.out.println(1);
+            System.out.println(logged_user);
+            System.out.println(198848);
             return res;
         } else {
             res.put("loginable", "no");
@@ -80,8 +79,12 @@ public class LoginController {
 //如果使用了RedirectAttributes作为参数，但是没有进行redirect，这种情况下不会将RedirectAttributes参数进行传递，默认还是传递forward对应的model，
 
     @RequestMapping("/logged")
-    public ModelAndView login(ModelAndView mav) {
-        mav.addObject("user", logged_user);
+    public ModelAndView login(ModelAndView mav, HttpSession session) {
+
+        //todo:设置user到session中
+        session.setAttribute("user",logged_user);
+
+//        mav.addObject("user", logged_user);
         mav.setViewName("hello");
         return mav;
     }
@@ -123,21 +126,8 @@ public class LoginController {
         return 0;
     }
 
-//    public UserDAO getUserDAO() {
-//        return userDAO;
-//    }
-
     public User getLogged_user() {
         return logged_user;
     }
 
-//    @Autowired
-//    public void setLogged_user(User logged_user) {
-//        this.logged_user = logged_user;
-//    }
-    //    @RequestMapping("/hello")
-//    public String hello(Model m) {
-//        m.addAttribute("user", "198848");
-//        return "hello";
-//    }
 }

@@ -86,11 +86,9 @@ $(function () {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data) {
-                    // alert(typeof data);
-                    alert(data.loginable);
                     var res = data.loginable;
                     if (res === "yes") {
-                        $("#logResult").html("登录" + logornot);
+                        $("#logResult").html("登录成功！");
                         //登录成功后在回调函数里再次访问controller得到试图modelandview
                         $("#registerAndLogin").attr("action", "/logged");
                     } else {

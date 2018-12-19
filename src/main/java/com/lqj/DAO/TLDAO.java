@@ -13,10 +13,13 @@ import java.util.List;
 public class TLDAO extends DAO<TaoLun> {
 
     private String tlTable;
+//    public static int totalNumofMes = tldao.getTLNums();
 
     public int nextId() {
         return super.newestId(tlTable);
     }
+
+//    public
 
     @Override
 //    @RequestMapping("/addTaoLunInDAO")
@@ -64,11 +67,11 @@ public class TLDAO extends DAO<TaoLun> {
 
     //按照id倒排序（最新的在前面）从最新的数据开始取totalnum条数据
     public List<TaoLun> getLatest(int idStart, int totalNum) {
-        if (idStart < 0) {
-            idStart = 0;
-        } else {
-            idStart = totalNum - 1;
-        }
+//        if (idStart < 0) {
+//            idStart = 0;
+//        } else {
+//            idStart = totalNum - 1;
+//        }
 
         String sql = String.format("select * from %s order by id desc LIMIT ?,?", tlTable);
         List<TaoLun> tls = new ArrayList<>();

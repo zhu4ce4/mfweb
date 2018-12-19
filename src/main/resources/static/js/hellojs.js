@@ -76,40 +76,36 @@ function GetPage() {
     //将$.ajax做成方法并命名为doAjax以便调用，调用时提供参数demand
     this.doAjax = function (demand) {
         $.ajax({
-            url: "/getTaoLunList",
+            url: "/taoLun/getTaoLunList",
             type: "get",
             async: false,
             data: {"demand": demand},
 
-            success: function (getResult) {
-                var result = $.parseJSON(getResult);
-                if (result.login === "true") {
-                    var user = result.user;
-                    // $("#toRegister").css("display", "none");
-                    $("#author").val(user.name);
-                    $("#toRegister").html(user.name);
-                    // $("#toRegister").html("ID:" + user.id+"&nbsp&nbsp"+user.name);
-                    $("#beforeLogin").attr("href", "userProfile.html");
-                    $("#userPhoto").attr("src", user.picpath);
-
-                    var results = result.res;
-                    var length = results.length;
-                    for (var i = 0; i < length; i++) {
-                        var lp = results[i];
-                        //todo:在标题上面加上该文章的链接
-                        // $("#Person" + i).html("<a href='login.html'>"+lp.name+"</a>");
-                        $("#title" + i).html(lp.name);
-                        $("#message" + i).html(lp.messages);
-                        $("#author" + i).html(lp.author);
-                    }
-                    if (length < 5) {
-                        for (var j = 0; j < (5 - length); j++) {
-                            // for (var j = 0; j < 1; j++) {
-                            var newj = j + length;
-                            $("#title" + newj).html("<span>&nbsp;</span>");
-                            $("#message" + newj).html("<span>&nbsp;</span>");
-                            $("#author" + newj).html("<span>&nbsp;</span>");
-                        }
+            success: function (results) {
+                //此处应该使用ajax较好地实现免刷新页面刷新数据，用thymeleaf会刷新页面
+                // if (getResult === "success") {
+                //     window.location.href = "/taoLun/showTLList";
+                // $("#jianyineirong").attr("action", "/taoLun/showTLList");
+                //     alert(20181220);
+                // }
+                // $("#toRegister").css("display", "none");
+                // $("#beforeLogin").attr("href", "userProfile"++".html");
+                var length = results.length;
+                for (var i = 0; i < length; i++) {
+                    var tl = results[i];
+                    //todo:在标题上面加上该文章的链接
+                    // $("#Person" + i).html("<a href='login.html'>"+tl.name+"</a>");
+                    $("#title" + i).html(tl.title);
+                    $("#message" + i).html(tl.message);
+                    $("#author" + i).html(tl.author);
+                }
+                if (length < 5) {
+                    for (var j = 0; j < (5 - length); j++) {
+                        // for (var j = 0; j < 1; j++) {
+                        var newj = j + length;
+                        $("#title" + newj).html("<span>&nbsp;</span>");
+                        $("#message" + newj).html("<span>&nbsp;</span>");
+                        $("#author" + newj).html("<span>&nbsp;</span>");
                     }
                 }
             },

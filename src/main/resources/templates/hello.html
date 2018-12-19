@@ -119,9 +119,9 @@
         <img th:src="@{/static/img/icon/1.jpeg}" style="margin-left: 100px">
         <img th:src="@{/static/img/icon/3.gif}" style="margin-left: 100px">
         <a href="login.html" id="beforeLogin" style="margin-left: 40%">
-            <button th:text="${user.name}" class="btn-danger btn-lg" id="toRegister" >会员注册/登录</button>
+            <button th:text="${session.user==null}?'会员注册/登录':|会员:${session.user.name}|" class="btn-danger btn-lg" id="toRegister" ></button>
         </a>
-        <img id="userPhoto" src="" style="margin-left: 2%;width: 50px;height: 50px">
+        <img id="userPhoto" th:src="${session.user==null}?'':@{/static/img/userPhoto/{picpath}(picpath=${session.user.picpath})}" style="margin-left: 2%;width: 50px;height: 50px">
     </div>
     <hr/>
 
@@ -266,13 +266,17 @@
                 </td>
             </tr>
             <tr>
+            <!--<tr th:each="item,itemStat : ${tlList}" th:if="${itemStat.size}==5">-->
                 <td id="title0">
+                <!--<td id="title0" th:text="${item.title}">-->
                     私密内容
                 </td>
                 <td id="message0">
+                <!--<td id="message0" th:text="${item.message}">-->
                     私密内容，请注册登录后可见
                 </td>
                 <td id="author0">
+                <!--<td id="author0" th:text="${item.author}">-->
                     私密内容
                 </td>
             </tr>
@@ -338,7 +342,7 @@
             <span class="text-warning">标题<b style="color: orangered">*</b></span>：
             <input id="title" name="title" placeholder="取个标题" size="30" type="text"><br>
             <span class="text-warning">作者<b style="color: orangered">*</b></span>：
-            <input id="author" name="author" placeholder="联系方式或作者大名" size="30" type="text"><br>
+            <input id="author" th:placeholder="${session.user==null}?'联系方式或作者大名':${session.user.name}" name="author"  size="30" type="text"><br>
             <span class="text-warning">验证<b style="color: orangered">*</b></span>：
             <input class="btn disabled btn-danger randomCode" id="randomCode" name="randomCode" onclick="codeConfirm()"
                    style="width: 60px">
