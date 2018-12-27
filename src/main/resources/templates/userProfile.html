@@ -1,15 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>用户首页</title>
+    <title>我的首页</title>
+    <script th:src="@{/static/js/jquery-3.3.1.js}" src="../../resources/static/js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap/3.3.6/bootstrap.min.css}"
+          href="../../resources/static/css/bootstrap/3.3.6/bootstrap.min.css"/>
+    <script th:src="@{/static/js/bootstrap/3.3.6/bootstrap.min.js}"
+            src="../../resources/static/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/static/css/userProfile.css}" href="../../resources/static/css/userProfile.css"/>
+    <script th:src="@{/static/js/jquery.validate.min.js}"
+            src="../../resources/static/js/jquery.validate.min.js"></script>
+    <script th:src="@{/static/js/additional-methods.min.js}"
+            src="../../resources/static/js/additional-methods.min.js"></script>
 </head>
 <body>
+<script th:inline="javascript">
+    // 取值后传递给js、jquery
+    var author = [[${session.user.name}]];
+</script>
+<div>
+    <h1>
+        我的帖子列表
+    </h1>
+    <h3 th:text="${session.user==null}?'非会员':|ID:${session.user.id}|"></h3>
+    <h3 th:text="${session.user==null}?'':|会员:${session.user.name}|"></h3>
+    <img id="userPhoto"
+         th:src="${session.user==null}?'':@{/static/img/userPhoto/{picpath}(picpath=${session.user.picpath})}"
+         style="margin-left: 2%;width: 50px;height: 50px">
+</div>
+<hr>
 
-<h1>
-    我的首页
-</h1>
-
+<table class="table-striped table-hover" id="criticTable" style="width: 100%">
+    <tr>
+        <td class="text-warning" style="font-size: x-large;">
+            帖子列表
+        </td>
+    </tr>
+    <tr>
+        <td id="tlTitle0">
+            私密内容
+        </td>
+    </tr>
+    <tr>
+        <td id="tlTitle1">
+            私密内容
+        </td>
+    </tr>
+    <tr>
+        <td id="tlTitle2">
+            私密内容
+        </td>
+    </tr>
+    <tr>
+        <td id="tlTitle3">
+            私密内容
+        </td>
+    </tr>
+    <tr>
+        <td id="tlTitle4">
+            私密内容
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button class="btn-info" id="lastPage" style="text-align: center">上一页</button>
+            <button class="btn-info" id="nextPage">下一页</button>
+            <button class="btn-info" id="firstPage">首页</button>
+        </td>
+    </tr>
+</table>
 
 </body>
+<script th:src="@{/static/js/userProfile.js}" src="../../resources/static/js/userProfile.js"></script>
 </html>

@@ -86,13 +86,12 @@ $(function () {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data) {
-                    var res = data.loginable;
-                    if (res === "yes") {
+                    if (data === "yes") {
                         $("#logResult").html("登录成功！");
                         //登录成功后在回调函数里再次访问controller得到试图modelandview
                         $("#registerAndLogin").attr("action", "/logged");
                     } else {
-                        alert("登录失败,请注册后登录或稍后再试");
+                        $("#logResult").html("登录失败,请注册后登录或稍后再试");
                         $("#registerAndLogin").attr("action", "/login.html");
                     }
                 }
@@ -138,6 +137,7 @@ function registerValidForm() {
                 required: true,
                 equalTo: "#password"
             },
+            //加入文件大小限制
             file: "required"
         },
         messages: {

@@ -1,12 +1,20 @@
 package com.lqj.entity;
 
-import org.springframework.stereotype.Service;
+import javax.persistence.*;
 
-@Service("taolun")
+@Entity()
+@Table(name="taolun")
 public class TaoLun {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "title")
     private String title;
+    @Column(name="author")
     private String author;
+    @Column(name = "message")
     private String message;
 
     public TaoLun() {
@@ -60,7 +68,8 @@ public class TaoLun {
     @Override
     public String toString() {
         return "TaoLun{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", message='" + message + '\'' +
                 '}';

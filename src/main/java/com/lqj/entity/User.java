@@ -1,32 +1,27 @@
 package com.lqj.entity;
 
-import org.springframework.stereotype.Component;
+import javax.persistence.*;
 
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-//import javax.persistence.Id;
-import java.io.Serializable;
+@Entity()
+@Table(name = "users")
+public class User {
 
-@Component
-//@Entity(name = "user")
-public class User implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    //故意设置默认id为-1
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id = -1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id = -1;
+    @Column(name = "name")
     private String name;
+    @Column(name = "password")
     private String password;
     //todo:设置用户的默认头像
+    @Column(name = "picpath")
     private String picpath;
 
     public User() {
     }
 
-    public User(Integer id, String name, String password, String picpath) {
+    public User(int id, String name, String password, String picpath) {
         this.id = id;
         this.name = name;
         this.password = password;

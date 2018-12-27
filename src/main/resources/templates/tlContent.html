@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>讨论区</title>
+    <script th:src="@{/static/js/jquery-3.3.1.js}" src="../../resources/static/js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap/3.3.6/bootstrap.min.css}"
+          href="../../resources/static/css/bootstrap/3.3.6/bootstrap.min.css"/>
+    <script th:src="@{/static/js/bootstrap/3.3.6/bootstrap.min.js}"
+            src="../../resources/static/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/static/css/hello.css}" href="../../resources/static/css/hello.css"/>
+    <script th:src="@{/static/js/jquery.validate.min.js}"
+            src="../../resources/static/js/jquery.validate.min.js"></script>
+    <script th:src="@{/static/js/additional-methods.min.js}"
+            src="../../resources/static/js/additional-methods.min.js"></script>
+</head>
+<body>
+<script th:inline="javascript">
+    // 取值后传递给js、jquery
+    var tlid = [[${taolun.id}]];
+</script>
+
+
+<h1 th:text="${taolun.title}" th:align="center"></h1>
+<br>
+<h4 th:text="|作者:${taolun.author}|" th:align="center"></h4>
+
+<br>
+<h3 th:text="${taolun.message}">
+    内容
+</h3>
+<br>
+<br>
+<br>
+<table class="table-striped table-hover" id="criticTable" style="width: 100%">
+    <tr>
+        <td class="text-warning" style="font-size: x-large;" width='8%'>
+            评论员
+        </td>
+        <td class="text-warning" style="font-size: x-large;" width='92%'>
+            热评
+        </td>
+    </tr>
+    <tr>
+        <td id="criticName0">
+            私密内容
+        </td>
+        <td id="critic0">
+            私密内容
+        </td>
+    </tr>
+    <tr>
+        <td id="criticName1">
+            私密内容
+        </td>
+        <td id="critic1">
+            私密内容
+        </td>
+    </tr>
+    <tr>
+        <td id="criticName2">
+            私密内容
+        </td>
+        <td id="critic2">
+            私密内容
+        </td>
+    </tr>
+    <tr>
+        <td id="criticName3">
+            私密内容
+        </td>
+        <td id="critic3">
+            私密内容
+        </td>
+    </tr>
+    <tr>
+        <td id="criticName4">
+            私密内容
+        </td>
+        <td id="critic4">
+            私密内容
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <button class="btn-info" id="lastPage" style="text-align: center">上一页</button>
+            <button class="btn-info" id="nextPage">下一页</button>
+            <button class="btn-info" id="firstPage">首页</button>
+        </td>
+    </tr>
+</table>
+<br>
+<br>
+<form id="comment" method="post">
+    <span class="text-warning">验证码<b style="color: orangered">*</b></span>：
+    <input class="btn disabled btn-danger randomCode" id="randomCode" name="randomCode" onclick="codeConfirm()"
+           style="width: 60px">
+    <input class="confirmCode btn-default" id="confirmCode" name="confirmCode" placeholder="点击左侧可刷新验证码"
+           style="width: 150px"
+           type="text">
+    <br>
+    <textarea cols="40" id="critics" name="critics" placeholder="评论内容：(不超过50个字)"
+              rows="10"></textarea>
+    <br>
+    <button class="btn-success" id="postCritic">评论</button>
+    <span id="postCriticsRes"></span>
+    <br>
+    <input class="btn-success" type="reset" value="清空">
+    <br>
+    <a href="hello.html">
+        <button class="btn-danger btn-lg">返回首页</button>
+    </a>
+</form>
+
+<div th:replace="footer::footer2(2017,2018)"></div>
+</body>
+<script th:src="@{/static/js/tlcontent.js}" src="../../resources/static/js/tlcontent.js"></script>
+</html>

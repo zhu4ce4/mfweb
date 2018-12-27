@@ -1,12 +1,3 @@
-$($.ajax({
-    url: "/onlineNumber",
-    type: "get",
-    async: false,
-    success: function (data) {
-        alert(data);
-        $("#OnlineNumber").html(data);
-    }
-}));
 
 //准备随机验证码用于调用
 function codeConfirm() {
@@ -94,14 +85,12 @@ function GetPage() {
                 for (var i = 0; i < length; i++) {
                     var tl = results[i];
                     //todo:在标题上面加上该文章的链接
-                    // $("#Person" + i).html("<a href='login.html'>"+tl.name+"</a>");
-                    $("#title" + i).html(tl.title);
+                    $("#title" + i).html("<a href='taoLun/tlContent/" + tl.id + "'>" + tl.title + "</a>");
                     $("#message" + i).html(tl.message);
                     $("#author" + i).html(tl.author);
                 }
                 if (length < 5) {
                     for (var j = 0; j < (5 - length); j++) {
-                        // for (var j = 0; j < 1; j++) {
                         var newj = j + length;
                         $("#title" + newj).html("<span>&nbsp;</span>");
                         $("#message" + newj).html("<span>&nbsp;</span>");
@@ -142,8 +131,8 @@ function maValidForm() {
     return $("#jianyineirong").validate({
         rules: {
             title: "required",
-            author: "required",
-            leavemessage: "required",
+            // 加入字数限制
+            message: "required",
             confirmCode: {
                 required: true,
                 equalTo: "#randomCode"
@@ -151,9 +140,8 @@ function maValidForm() {
         },
         messages: {
             title: "请输入标题",
-            author: "请输入联系方式或作者名",
             confirmCode: "请输入验证码",
-            leavemessage: "请输入内容"
+            message: "请输入内容"
         }
     });
 }
@@ -161,27 +149,28 @@ function maValidForm() {
 $("#postTaoLun").click(function () {
     if (maValidForm().form()) {
         var title = $("#title").val();
-        var author = $("#author").val();
-        var content = $("#leavemessage").val();
+        var message = $("#message").val();
+        var data = {title: title, message: message};
         $.ajax({
-            url: "/addTaoLun",
+            url: "/taoLun/addTaoLun",
             type: "post",
             async: false,//同步：意思是当有返回值以后才会进行后面的js程序。
-            data: {"name": title, "hao": author, "content": content},
-            success: function (data) {
-                var result = $.parseJSON(data);
-                if (result.login === "false") {
-                    $("#postTaoLunRes").html("请先注册登录");
-                    alert("请先登录！");
+            cache: false,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result === "unlogged") {
+                    $("#postTaoLunRes").html("请先注册/登录");
+                    window.location.href = "login.html";
+                } else if (result === "false") {
+                    $("#postTaoLunRes").html("发帖失败,请稍后重试!");
                 } else {
-                    $("#postTaoLunRes").html("发帖成功");
+                    $("#postTaoLunRes").html("发帖成功!");
                 }
-                // window.location.reload();此处不要用反而有问题，不用本行代码页面会自动刷新
             },
             error: function (err) {
                 alert("发帖失败");
-                $("#logResult").html(err);
-                window.location.reload();
+                $("#postTaoLunRes").html(err);
             }
         });
     } else {

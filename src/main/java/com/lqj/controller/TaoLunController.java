@@ -2,65 +2,66 @@ package com.lqj.controller;
 
 import com.lqj.DAO.TLDAO;
 import com.lqj.entity.TaoLun;
+import com.lqj.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 @RequestMapping("/taoLun")
 public class TaoLunController {
 
-    private int numNow;
+    private int pageNow;
     private TLDAO tldao;
-    private int totalNumofTL;
 
     @RequestMapping("/getTaoLunList")
-    public @ResponseBody List<TaoLun> getTaoLunList(@RequestParam("demand") String demand) {
-        totalNumofTL = tldao.getTotalNums(tldao.getTlTable());
-        List<TaoLun> tls;
+    public @ResponseBody
+    List<TaoLun> getTaoLunList(@RequestParam("demand") String demand) {
+        long totalNumOfTL = tldao.count();
+
+        Sort sort = new Sort(Sort.Direction.DESC, "id");
 
         if ("newestFive".equals(demand)) {
-            tls = tldao.getLatest(0, 5);
-            System.out.println(tls);
-            System.out.println("******");
-            numNow = 0;
-            return tls;
+            pageNow = 0;
+
         } else if ("lastFive".equals(demand)) {
-            if (numNow - 5 >= 0) {
-                numNow -= 5;
-            }
-            tls = tldao.getLatest(numNow, 5);
-            return tls;
+            if (pageNow - 1 >= 0)
+                pageNow --;
         } else {
-            if (numNow + 5 < totalNumofTL) {
-                numNow += 5;
+            if (pageNow + 1 < totalNumOfTL / 5.0) {
+                pageNow ++;
             }
-            tls = tldao.getLatest(numNow, 5);
-            return tls;
         }
+        Pageable pageable = PageRequest.of(pageNow, 5, sort);
+        Page<TaoLun> page = tldao.findAll(pageable);
+        return page.getContent();
     }
 
-//    @RequestMapping("/showTLList")
-//    public String showTLList(Model mav) {
-//        System.out.println("*********show*********");
-//        mav.addAttribute("tlList", tls);
-//        System.out.println("跳转前");
-//        System.out.println(tls);
-//        System.out.println("准备跳转");
-////        mav.("hello");
-//        return "hello";
-//    }
-
-    public int getNumNow() {
-        return numNow;
+    @RequestMapping(value = "/addTaoLun", consumes = "application/json")
+    @ResponseBody
+    public String addTaoLun(@RequestBody TaoLun taolun, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (null == user) {
+            return "unlogged";
+        }
+        taolun.setAuthor(user.getName());
+        return ""+tldao.saveAndFlush(taolun);
     }
 
-    public void setNumNow(int numNow) {
-        this.numNow = numNow;
+    @RequestMapping("/tlContent/{id}")
+    public ModelAndView tlContent(@PathVariable("id") int id, ModelAndView mav) {
+        TaoLun tl = tldao.getOne(id);
+        mav.addObject("taolun", tl);
+        mav.setViewName("tlContent");
+        return mav;
     }
 
     public TLDAO getTldao() {
@@ -72,8 +73,11 @@ public class TaoLunController {
         this.tldao = tldao;
     }
 
-    public int getTotalNumofTL() {
-        return totalNumofTL;
+    public int getPageNow() {
+        return pageNow;
     }
 
+    public void setPageNow(int pageNow) {
+        this.pageNow = pageNow;
+    }
 }

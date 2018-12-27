@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link>
 <head>
-    <meta charset="UTF-8">
-    <title>新版</title>
-    <script th:src="@{/static/js/jquery-3.3.1.js}" src="../../resources/static/js/jquery-3.3.1.js"></script>
-    <link rel="stylesheet" th:href="@{/static/css/bootstrap/3.3.6/bootstrap.min.css}" href="../../resources/static/css/bootstrap/3.3.6/bootstrap.min.css"/>
-    <script th:src="@{/static/js/bootstrap/3.3.6/bootstrap.min.js}" src="../../resources/static/js/bootstrap/3.3.6/bootstrap.min.js"></script>
-    <link rel="stylesheet" th:href="@{/static/css/hello.css}" href="../../resources/static/css/hello.css"/>
-    <script th:src="@{/static/js/jquery.validate.min.js}" src="../../resources/static/js/jquery.validate.min.js"></script>
-    <script th:src="@{/static/js/additional-methods.min.js}" src="../../resources/static/js/additional-methods.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>港桥网事</title>
+    <script type="text/javascript" src="../../resources/static/js/jquery-3.3.1.js"
+            th:src="@{/static/js/jquery-3.3.1.js}"></script>
+    <link type="text/css" rel="stylesheet" href="../../resources/static/css/bootstrap/3.3.6/bootstrap.min.css"
+          th:href="@{/static/css/bootstrap/3.3.6/bootstrap.min.css}"/>
+    <script type="text/javascript" src="../../resources/static/js/bootstrap/3.3.6/bootstrap.min.js"
+            th:src="@{/static/js/bootstrap/3.3.6/bootstrap.min.js}"></script>
+    <link type="text/css" rel="stylesheet" href="../../resources/static/css/hello.css"
+          th:href="@{/static/css/hello.css}"/>
+    <script type="text/javascript" src="../../resources/static/js/jquery.validate.min.js"
+            th:src="@{/static/js/jquery.validate.min.js}"></script>
+    <script type="text/javascript" src="../../resources/static/js/additional-methods.min.js"
+            th:src="@{/static/js/additional-methods.min.js}"></script>
 </head>
 
 <body>
@@ -18,7 +23,7 @@
     <div id="header">
         <div id="paomadeng" style="width: 100%;margin-top: 3px">
             <marquee behavior=alternate scrollamount="2">***本港最大社交门户 港桥新城网事
-                欢迎您!***寻人寻亲寻友广告招聘贷款***商务事宜请联系助理(微信):dongdongwoshishi 关注微信公众号：动动我试试
+                欢迎您!***寻人寻亲寻友广告招聘贷款***商务事宜请联系助理(微信):dongdongwoshishi 微信公众号：动动我试试
             </marquee>
         </div>
     </div>
@@ -26,7 +31,8 @@
     <div id="leftCover">
         <h4 style="color: black">古今多少事 都付笑谈中 </h4>
         <h2 style="color: black;">本期封面 特别推荐-->&nbsp&nbsp&nbsp&nbsp&nbsp迷雾中的港桥古镇</h2>
-        <img th:src="@{/static/img/icon/gq.jpg}" src="../../resources/static/img/icon/gq.jpg" align="left" height="283" width="100%"/>
+        <img src="../../resources/static/img/icon/gq.jpg" align="left" height="283" th:src="@{/static/img/icon/gq.jpg}"
+             width="100%"/>
     </div>
 
     <!--todo:无法轮播-->
@@ -118,10 +124,13 @@
         <img th:src="@{/static/img/icon/7.png}">
         <img th:src="@{/static/img/icon/1.jpeg}" style="margin-left: 100px">
         <img th:src="@{/static/img/icon/3.gif}" style="margin-left: 100px">
-        <a href="login.html" id="beforeLogin" style="margin-left: 40%">
-            <button th:text="${session.user==null}?'会员注册/登录':|会员:${session.user.name}|" class="btn-danger btn-lg" id="toRegister" ></button>
+        <a th:href="${session.user==null}?'login.html':'userProfile'" id="beforeLogin" style="margin-left: 40%">
+            <button th:text="${session.user==null}?'会员注册/登录':|会员:${session.user.name}|" class="btn-danger btn-lg"
+                    id="toRegister"></button>
         </a>
-        <img id="userPhoto" th:src="${session.user==null}?'':@{/static/img/userPhoto/{picpath}(picpath=${session.user.picpath})}" style="margin-left: 2%;width: 50px;height: 50px">
+        <img id="userPhoto"
+             th:src="${session.user==null}?'':@{/static/img/userPhoto/{picpath}(picpath=${session.user.picpath})}"
+             style="margin-left: 2%;width: 50px;height: 50px">
     </div>
     <hr/>
 
@@ -140,14 +149,7 @@
             <button class="btn-default" onclick="resetInput()" type="button">清空</button>
             <!--onclick="clear()"错误，因为clear是关键字！-->
             <h5 style="color: pink;padding-top: 10px">公益广告</h5>
-            <!--<img src="../../resources/static/img/icon/bg1s.jpg">-->
             <img th:src="@{/static/img/icon/bg1s.jpg}">
-            <!--<img th:src="@{../static/img/icon/bg1s.jpg}">-->
-            <!--<img th:src="@{../static/img/icon/bg1s.jpg}">-->
-            <!--<img th:src="@{../static/img/icon/bg1s.jpg}">-->
-            <!--<img th:src="@{../static/img/icon/bg1s.jpg}">-->
-            <!--<img th:src="@{../static/img/icon/bg1s.jpg}">-->
-            <!--<img th:src="@{../static/img/icon/bg1s.jpg}">-->
         </div>
 
         <div style="width: 100%">
@@ -250,6 +252,7 @@
             <tr>
                 <td></td>
                 <td style="font-size: xx-large">
+                    <!--爆料发帖讨论区（点击标题可见）当前在线人数：<a id="OnlineNumber" th:text="${session.onlineNums}"></a>-->
                     爆料发帖讨论区（点击标题可见）当前在线人数：<a id="OnlineNumber"></a>
                 </td>
                 <td></td>
@@ -266,17 +269,13 @@
                 </td>
             </tr>
             <tr>
-            <!--<tr th:each="item,itemStat : ${tlList}" th:if="${itemStat.size}==5">-->
                 <td id="title0">
-                <!--<td id="title0" th:text="${item.title}">-->
                     私密内容
                 </td>
                 <td id="message0">
-                <!--<td id="message0" th:text="${item.message}">-->
                     私密内容，请注册登录后可见
                 </td>
                 <td id="author0">
-                <!--<td id="author0" th:text="${item.author}">-->
                     私密内容
                 </td>
             </tr>
@@ -341,8 +340,6 @@
         <form id="jianyineirong" method="post" style="width: 50%;">
             <span class="text-warning">标题<b style="color: orangered">*</b></span>：
             <input id="title" name="title" placeholder="取个标题" size="30" type="text"><br>
-            <span class="text-warning">作者<b style="color: orangered">*</b></span>：
-            <input id="author" th:placeholder="${session.user==null}?'联系方式或作者大名':${session.user.name}" name="author"  size="30" type="text"><br>
             <span class="text-warning">验证<b style="color: orangered">*</b></span>：
             <input class="btn disabled btn-danger randomCode" id="randomCode" name="randomCode" onclick="codeConfirm()"
                    style="width: 60px">
@@ -355,6 +352,7 @@
             <br>
             <button class="btn-success" id="postTaoLun">发帖</button>
             <span id="postTaoLunRes"></span>
+            <br>
             <input class="btn-danger" type="reset" value="清空">
         </form>
     </div>
@@ -367,16 +365,15 @@
         <div id="gongshang">
             <img height="137" th:src="@{/static/img/icon/8.png}" width="100">
         </div>
-        <div id="beizhu">
-            Copyright@港桥新城网事 | 公益广告：节约粮食<br>
-            联系方式: 微信号:5559899898797 | 地址: 重庆渝中区中山路街道办事处<br>
-            电话：023-49001100 | 邮编：402359 | 电子邮箱：023-49001100@163.com
+        <!--<div ></div>-->
+        <div id="beizhu" th:replace="footer::footer2(2017,2018)">
+            Copyright@港桥新城网事 | Bug反馈：023-49001100@163.com<br>
+            微信号:动动我试试 | 公益广告<br>
         </div>
         <div id="gongan">
             <img height="137" th:src="@{/static/img/icon/9.jpg}" width="110">
         </div>
     </div>
-
 
 </div>
 
