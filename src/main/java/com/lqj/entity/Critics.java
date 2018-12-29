@@ -1,20 +1,20 @@
 package com.lqj.entity;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 
-@Entity()
-@Table(name = "critics")
+//@Entity()
+//@Table(name = "critics")
 public class Critics {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id")
     private int id;
-    @Column(name = "tlid")
+//    @Column(name = "tlid")
     private int tlid;
-    @Column(name = "criticname")
+//    @Column(name = "criticname")
     private String criticName;
-    @Column(name = "critic")
+//    @Column(name = "critic")
     private String critic;
 
     public Critics() {

@@ -124,7 +124,7 @@
         <img th:src="@{/static/img/icon/7.png}">
         <img th:src="@{/static/img/icon/1.jpeg}" style="margin-left: 100px">
         <img th:src="@{/static/img/icon/3.gif}" style="margin-left: 100px">
-        <a th:href="${session.user==null}?'login.html':'userProfile'" id="beforeLogin" style="margin-left: 40%">
+        <a th:href="${session.user==null}?'/login.html':'/userProfile'" id="beforeLogin" style="margin-left: 40%">
             <button th:text="${session.user==null}?'会员注册/登录':|会员:${session.user.name}|" class="btn-danger btn-lg"
                     id="toRegister"></button>
         </a>

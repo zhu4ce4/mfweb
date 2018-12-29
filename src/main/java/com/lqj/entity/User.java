@@ -1,21 +1,21 @@
 package com.lqj.entity;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 
-@Entity()
-@Table(name = "users")
+//@Entity()
+//@Table(name = "users")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id = -1;
-    @Column(name = "name")
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id")
+    private int id;
+//    @Column(name = "name")
     private String name;
-    @Column(name = "password")
+//    @Column(name = "password")
     private String password;
     //todo:设置用户的默认头像
-    @Column(name = "picpath")
+//    @Column(name = "picpath")
     private String picpath;
 
     public User() {

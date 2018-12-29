@@ -1,20 +1,20 @@
 package com.lqj.entity;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 
-@Entity()
-@Table(name="taolun")
+//@Entity()
+//@Table(name="taolun")
 public class TaoLun {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id")
     private int id;
-    @Column(name = "title")
+//    @Column(name = "title")
     private String title;
-    @Column(name="author")
+//    @Column(name="author")
     private String author;
-    @Column(name = "message")
+//    @Column(name = "message")
     private String message;
 
     public TaoLun() {

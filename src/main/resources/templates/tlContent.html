@@ -8,7 +8,7 @@
           href="../../resources/static/css/bootstrap/3.3.6/bootstrap.min.css"/>
     <script th:src="@{/static/js/bootstrap/3.3.6/bootstrap.min.js}"
             src="../../resources/static/js/bootstrap/3.3.6/bootstrap.min.js"></script>
-    <link rel="stylesheet" th:href="@{/static/css/hello.css}" href="../../resources/static/css/hello.css"/>
+    <!--<link rel="stylesheet" th:href="@{/static/css/hello.css}" href="../../resources/static/css/hello.css"/>-->
     <script th:src="@{/static/js/jquery.validate.min.js}"
             src="../../resources/static/js/jquery.validate.min.js"></script>
     <script th:src="@{/static/js/additional-methods.min.js}"
@@ -108,8 +108,11 @@
     <br>
     <input class="btn-success" type="reset" value="清空">
     <br>
-    <a href="hello.html">
-        <button class="btn-danger btn-lg">返回首页</button>
+    <!--<a th:href="@{/hello.html}">-->
+    <!--<button class="btn-danger btn-lg">返回首页</button>-->
+    <!--</a>-->
+    <a th:href="${'/hello.html'}">
+        <button th:text="${'返回首页'}" class="btn-danger btn-lg"></button>
     </a>
 </form>
 
