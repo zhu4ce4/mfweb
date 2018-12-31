@@ -1,4 +1,3 @@
-
 //准备随机验证码用于调用
 function codeConfirm() {
     var generConfirmCode = Math.round(Math.random() * 8999 + 1000);
@@ -205,3 +204,48 @@ function printDateTime() {
 //todo:printdatetime后面加上括号只会执行一次，但不加括号，要等到1000*60后才执行第一次
 setTimeout(printDateTime, 0);
 setInterval(printDateTime, 1000 * 60);
+
+
+$(document).ready(function () {
+    var urlPrefix = 'ws://localhost:8080/chat-room/';
+    var ws = null;
+    $('#btn_join').click(function () {
+        var username = $('#in_user_name').val();
+
+        $("#btn_join").attr("class", "btn disabled");
+        $("#btn_join").attr("disabled", "disabled");
+        $("#in_user_name").attr("disabled", "disabled");
+
+        var url = urlPrefix + username;
+        ws = new WebSocket(url);
+        ws.onopen = function () {
+            console.log("建立 websocket 连接...");
+        };
+        ws.onmessage = function (event) {
+            //服务端发送的消息
+            $('#message_content').append(event.data + '\n');
+        };
+        ws.onclose = function () {
+            $('#message_content').append('用户[' + username + '] 已经离开聊天室!');
+            console.log("关闭 websocket 连接...");
+        }
+    });
+//客户端发送消息到服务器
+    $('#btn_send_all').click(function () {
+        var msg = $('#in_room_msg');
+        if (ws) {
+            ws.send(msg.val());
+        }
+        msg.val("");
+    });
+
+    $("#btn_send_point").click(function () {
+        var sender = $("#in_sender").val();
+        var receive = $("#in_receive").val();
+        var message = $("#in_point_message").val();
+        $.get("/chat-room/" + sender + "/to/" + receive + "?message=" + message, function () {
+            alert("发送成功...")
+        })
+    })
+});
+

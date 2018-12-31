@@ -1,3 +1,5 @@
+
+
 //准备随机验证码用于调用
 function codeConfirm() {
     var generConfirmCode = Math.round(Math.random() * 8999 + 1000);
