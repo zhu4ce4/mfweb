@@ -1,3 +1,4 @@
+
 //准备随机验证码用于调用
 function codeConfirm() {
     var generConfirmCode = Math.round(Math.random() * 8999 + 1000);
@@ -205,16 +206,21 @@ function printDateTime() {
 setTimeout(printDateTime, 0);
 setInterval(printDateTime, 1000 * 60);
 
-
 $(document).ready(function () {
     var urlPrefix = 'ws://localhost:8080/chat-room/';
     var ws = null;
     $('#btn_join').click(function () {
+        if (liaotianzhe == null) {
+            alert("请先注册登录!");
+            window.location.href = "login.html";
+            return;
+
+        }
+
         var username = $('#in_user_name').val();
 
         $("#btn_join").attr("class", "btn disabled");
         $("#btn_join").attr("disabled", "disabled");
-        $("#in_user_name").attr("disabled", "disabled");
 
         var url = urlPrefix + username;
         ws = new WebSocket(url);
@@ -244,7 +250,6 @@ $(document).ready(function () {
         var receive = $("#in_receive").val();
         var message = $("#in_point_message").val();
         $.get("/chat-room/" + sender + "/to/" + receive + "?message=" + message, function () {
-            alert("发送成功...")
         })
     })
 });

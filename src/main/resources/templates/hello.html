@@ -18,6 +18,11 @@
             th:src="@{/static/js/additional-methods.min.js}"></script>
 </head>
 
+<script th:inline="javascript">
+    // 取值后传递给js、jquery
+    var liaotianzhe = [[${session.user}]];
+</script>
+
 <body>
 <!--最外围div-->
 <div id="container" style="width: 100%;">
@@ -340,15 +345,15 @@
         <div id="taolunform">
             <h3 class="btn-info" id="jianyi" style="width: 260px">发帖/爆料/讨论/联系我们</h3>
             <form id="jianyineirong" method="post" style="width: 50%;">
-                <span class="text-warning" style="font-size: large">标题<b style="color: orangered">*</b></span>：
-                <input id="title" name="title" placeholder="取个标题" size="30" type="text"><br>
-                <span class="text-warning" style="font-size: large">验证<b style="color: orangered">*</b></span>：
-                <input class="btn disabled btn-danger randomCode" id="randomCode" name="randomCode"
-                       onclick="codeConfirm()"
-                       style="width: 60px">
-                <input class="confirmCode btn-default" id="confirmCode" name="confirmCode" placeholder="点击左侧可刷新验证码"
+                <span class="text-warning" style="font-size: large">标题<b style="color: orangered">*</b>：<input
+                        id="title" name="title" placeholder="取个标题" size="20" type="text"></span><br>
+                <span class="text-warning" style="font-size: large">验证<b style="color: orangered">*</b>：<input
+                        class="btn disabled btn-danger randomCode" id="randomCode" name="randomCode"onclick="codeConfirm()"
+                       style="width: 60px"/>
+                <input class="confirmCode btn-default" id="confirmCode" name="confirmCode" placeholder="点击验证码可刷新"
                        style="width: 150px"
                        type="text">
+                    </span>
                 <br>
                 <textarea cols="47" id="message" name="message" placeholder="讨论内容：(不超过200个字)"
                           rows="10"></textarea>
@@ -360,30 +365,24 @@
             </form>
         </div>
         <div id="chat" style="font-size: large">
-            <label for="message_content">交&nbsp;&nbsp;友&nbsp;&nbsp;室&nbsp;</label>
+            <span for="message_content" style="font-size: x-large">农&nbsp;&nbsp;门&nbsp;&nbsp;阵&nbsp;</span>
+            <br>
             <textarea id="message_content" readonly="readonly" cols="50" rows="10"></textarea>
             <br/>
 
-            <!--<label th:hidden="hidden" for="in_user_name">会员姓名 &nbsp;</label>-->
-            <!--<button th:hidden="hidden" th:value="${session.user==null}?'匿名':|${session.user.name}|" id="in_user_name"></button>-->
-            <!--<button th:class="btn-danger" id="btn_join">加入聊天室</button>-->
-            <!--<button id="btn_exit">离开聊天室</button>-->
+            <input th:disabled="disabled" th:hidden="hidden" id="in_user_name"
+                   th:value="${session.user==null}?'匿名':|${session.user.name}|"/>
+            <button id="btn_join" th:class="btn-danger">加入农门阵</button>
 
-
-            <!--<label for="in_user_name">用户姓名 &nbsp;</label><input id="in_user_name" value=""/>-->
-            <label for="in_user_name">用户姓名 &nbsp;</label><input id="in_user_name" th:value="${session.user==null}?'匿名':|${session.user.name}|"/>
-            <button id="btn_join">加入聊天室</button>
-            <!--<button id="btn_exit">离开聊天室</button>-->
-
-            <br/><br/>
-            <label for="in_room_msg">群发消息 &nbsp;</label><input id="in_room_msg" value=""/>
+            <br/>
+            <textarea id="in_room_msg" cols="30" rows="3" value=""></textarea>
             <button id="btn_send_all">发送消息</button>
             <br/><br/><br/>
-            好友聊天
-            <br/>
-            <label for="in_sender">发送者 &nbsp;</label><input id="in_sender" value=""/><br/>
-            <label for="in_receive">接受者 &nbsp;</label><input id="in_receive" value=""/><br/>
-            <label for="in_point_message">消息体 &nbsp;</label><input id="in_point_message" value=""/>
+            <span style="font-size: x-large">好&nbsp友&nbsp一&nbsp对&nbsp一&nbsp聊&nbsp天</span>
+            <input th:hidden="hidden" id="in_sender" th:value="${session.user==null}?'匿名':|${session.user.name}|"/><br/>
+            <label for="in_receive">接收者&nbsp;&nbsp;</label>
+            <input id="in_receive" value=""/><br/>
+            <textarea id="in_point_message" cols="30" rows="3"></textarea>
             <button id="btn_send_point">发送消息</button>
         </div>
     </div>
@@ -404,9 +403,9 @@
 
 </div>
 
+<script src="../static/js/hellojs.js" th:src="@{/static/js/hellojs.js}"></script>
 
 </body>
-<script src="../static/js/hellojs.js" th:src="@{/static/js/hellojs.js}"></script>
 
 </html>
 

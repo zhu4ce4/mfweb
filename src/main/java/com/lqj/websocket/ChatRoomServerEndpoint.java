@@ -24,7 +24,7 @@ public class ChatRoomServerEndpoint {
 
     @OnMessage
     public void onMessage(@PathParam("username") String username, String message) {
-        sendMessageAll("用户[" + username + "] : " + message);
+        sendMessageAll("[" + username + "] : " + message);
     }
 
     @OnClose
@@ -32,7 +32,7 @@ public class ChatRoomServerEndpoint {
         //当前的Session 移除
         LIVING_SESSIONS_CACHE.remove(username);
         //并且通知其他人当前用户已经离开聊天室了
-        sendMessageAll("用户[" + username + "] 已经离开聊天室了！");
+        sendMessageAll("用户[" + username + "] 离开了聊天室！");
         try {
             session.close();
         } catch (IOException e) {
@@ -53,6 +53,6 @@ public class ChatRoomServerEndpoint {
 
     @GetMapping("/chat-room/{sender}/to/{receive}")
     public void onMessage(@PathVariable("sender") String sender, @PathVariable("receive") String receive, String message) {
-        sendMessage(LIVING_SESSIONS_CACHE.get(receive), "[" + sender + "]" + "-> [" + receive + "] : " + message);
+        sendMessage(LIVING_SESSIONS_CACHE.get(receive), "[" + sender + "]" + "--> [" + receive + "] : " + message);
     }
 }
